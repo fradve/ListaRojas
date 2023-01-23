@@ -1,0 +1,48 @@
+<div class="titulo">
+    CONTROL DE NOTAS DE LOS ESTUDIANTES
+</div>
+<hr>
+<div class="row">
+    <div class="col">
+        <div class="titulo">
+            Listado de Estudiantes
+        </div>
+        <hr>
+        <table class="tbl">
+            <tr><th>Nombres</th><th>Promedio</th><th>Resultado</th></tr>
+            <tr *ngFor="let estudiante of estudiantes">
+                <td>{{estudiante.nombres}}</td>
+                <td style="text-align:right">{{estudiante.promedio | number:'.2'}}</td>
+                <td [ngClass]="resultado(estudiante).toLowerCase()">{{resultado(estudiante)}} 
+                    <img width="16px" height="16px" src="../../assets/imagenes/smile.png" *ngIf="resultado(estudiante) === 'APROBADO'"/>
+                </td>
+            </tr>
+            <tr><th>Promedio de los {{estudiantes.length}} estudiante/s</th><th style="text-align:right">{{calcularPromedioLista() | number:'.2'}}</th><th></th></tr>
+        </table>
+    </div>
+    <div class="col">
+        <div class="titulo">
+            Agregar Estudiantes
+        </div>
+        <hr>
+        <form (ngSubmit)="agregar()">
+            <input type="text" id="nombres" placeholder="Nombres" name="nombres" [(ngModel)]="nuevo.nombres"/>
+            <input type="number" id="promedio" name="promedio" placeholder="Promedio" [(ngModel)]="nuevo.promedio" min="0" max="10"/>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col">
+        <div class="titulo">
+            TOP 3 MEJORES ESTUDIANTES
+        </div>
+        <hr>
+        <ul>
+            <li *ngFor="let estudiante of ordenar()| slice:0:3; let i = index">
+                <span *ngIf="i < 3">{{estudiante.nombres}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
